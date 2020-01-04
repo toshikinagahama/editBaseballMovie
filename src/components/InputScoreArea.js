@@ -5,19 +5,12 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { Grid } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from "react-redux";
-import { scoreInningChange } from '../actions'
+import { scoreInningStart, scoreInningEnd, inningSelectChange, omoteSelectChange } from '../actions'
 
 function InputScoreArea() {
     const dispatch = useDispatch();
-    const [inning, setInning] = React.useState('');
-    const [omote, setIsomote] = React.useState('');
-    const handleInningChange = event => {
-        setInning(event.target.value + "回");
-    };
-    const handleOmoteChange = event => {
-        setIsomote(event.target.value);
-    };
-    console.log(omote);
+    let selectedOmote = useSelector(state => state.selectedOmote);
+    let selectedInning = useSelector(state => state.selectedInning);
 
     return (
         <div style={{ padding: 30 }}>
@@ -25,7 +18,7 @@ function InputScoreArea() {
                 <Grid container justify="center">
                     <Grid item xs={12} style={{ paddingBottom: 30 }}>
                         <InputLabel id="demo-simple-select-label">イニング</InputLabel>
-                        <Select onChange={handleInningChange}>
+                        <Select onChange={(e) => dispatch(inningSelectChange(e.target.value))} value={selectedInning}>
                             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((val) => {
                                 return <MenuItem value={val}>{val}回</MenuItem>;
                             })
@@ -34,15 +27,18 @@ function InputScoreArea() {
                     </Grid>
                     <Grid item xs={12} style={{ paddingBottom: 30 }}>
                         <InputLabel id="demo-simple-select-label"></InputLabel>
-                        <Select onChange={handleOmoteChange}>
+                        <Select onChange={(e) => dispatch(omoteSelectChange(e.target.value))} value={selectedOmote}>
                             {["表", "裏"].map((val) => {
                                 return <MenuItem value={val}>{val}</MenuItem>;
                             })
                             }
                         </Select>
                     </Grid>
+                    <Grid item xs={12} style={{ paddingBottom: 10 }}>
+                        <Button variant="contained" color="primary" onClick={() => dispatch(scoreInningStart(selectedInning + "回" + selectedOmote))}>開始</Button>
+                    </Grid>
                     <Grid item xs={12}>
-                        <Button variant="contained" color="primary" onClick={() => dispatch(scoreInningChange(inning + omote))}>次の回へ</Button>
+                        <Button variant="contained" color="primary" onClick={() => dispatch(scoreInningEnd(selectedInning + "回" + selectedOmote))}>終了</Button>
                     </Grid>
                 </Grid>
 

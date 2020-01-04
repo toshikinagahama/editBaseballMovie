@@ -36,8 +36,23 @@ export const resultTimeTableSelect = (data) => ({
     data: data,
 });
 
-export const scoreInningChange = (nextInning) => ({
-    type: actionTypes.SCORE_INNING_CHANGE,
+export const scoreInningStart = (nextInning) => ({
+    type: actionTypes.SCORE_INNING_START,
     nextInning: nextInning,
+});
+
+export const scoreInningEnd = (nextInning) => ({
+    type: actionTypes.SCORE_INNING_END,
+    nextInning: nextInning,
+});
+
+export const inningSelectChange = (inning) => ({
+    type: actionTypes.INNING_SELECT_CHANGE,
+    selectedInning: inning
+});
+
+export const omoteSelectChange = (omote) => ({
+    type: actionTypes.OMOTE_SELECT_CHANGE,
+    selectedOmote: omote,
 });
 

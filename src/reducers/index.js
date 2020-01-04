@@ -2,14 +2,19 @@ import * as actionTypes from '../utils/actionTypes';
 import { combineReducers } from 'redux';
 import { act } from 'react-dom/test-utils';
 
-const initialVideoState = {
+const initialState = {
     player: {},
     src: "",
+    data: [{ UserID: "永濱敏樹", Event1: "offence", Event2: "左前安打", "RBI": 0, Time: 100 },
+    { UserID: "角野陽昴", Event1: "offence", Event2: "左前安打", "RBI": 0, Time: 200 }],
     currentTime: 0,
+    nextInning: 0,
+    selectedInning: 1,
+    selectedOmote: "表",
 };
 
-const videoChange = (state = initialVideoState, action) => {
-    console.log(action.src);
+const reducer = (state = initialState, action) => {
+    let newData = []
     switch (action.type) {
         case actionTypes.VIDEO_OPERATION:
             return {
@@ -27,24 +32,6 @@ const videoChange = (state = initialVideoState, action) => {
                 ...state,
                 currentTime: action.currentTime
             };
-
-        default:
-            return state;
-    }
-};
-
-const initialTableState = {
-    data: [{ UserID: "永濱敏樹", Event1: "offence", Event2: "左前安打", "RBI": 0, Time: 100 },
-    { UserID: "角野陽昴", Event1: "offence", Event2: "左前安打", "RBI": 0, Time: 200 }],
-    currentTime: 0,
-}
-
-const resultTableChange = (state = initialTableState, action) => {
-
-    console.log(action);
-    let newState = [];
-
-    switch (action.type) {
         case actionTypes.RESULT_TIMETABLE_ADD:
             if (action.data === undefined)
                 return { ...state };
@@ -56,59 +43,64 @@ const resultTableChange = (state = initialTableState, action) => {
             //パフォーマンス悪いかも
             for (let i = 0; i < state.data.length; i++) {
                 if (i === action.index) {
-                    newState.push(action.data);
+                    newData.push(action.data);
                     continue;
                 }
-                newState.push(state.data[i])
+                newData.push(state.data[i])
             }
             return {
                 ...state,
-                data: newState
+                data: newData
             }
         case actionTypes.RESULT_TIMETABLE_DELETE:
             //パフォーマンス悪いかも
             for (let i = 0; i < state.data.length; i++) {
                 if (i === action.index)
                     continue;
-                newState.push(state.data[i]);
+                newData.push(state.data[i]);
             }
             return {
                 ...state,
-                data: newState
+                data: newData
             }
         case actionTypes.RESULT_TIMETABLE_SELECT:
             return {
                 ...state,
                 currentTime: action.data["Time"]
             }
-        default:
-            return state;
-            break;
-    }
-};
-
-
-const initialScoreState = {
-    nextInning: 0,
-};
-
-const scoreChange = (state = initialScoreState, action) => {
-    console.log(action.nextInning);
-    switch (action.type) {
-        case actionTypes.SCORE_INNING_CHANGE:
+        case actionTypes.SCORE_INNING_START:
+            newData.push({ UserID: "-", Event1: action.nextInning, Event2: "開始", "RBI": "-", Time: state.currentTime });
+            for (let i = 0; i < state.data.length; i++) {
+                newData.push(state.data[i]);
+            }
             return {
                 ...state,
-                nextInning: action.nextInning
+                nextInning: action.nextInning,
+                data: newData
+            };
+        case actionTypes.SCORE_INNING_END:
+            newData.push({ UserID: "-", Event1: action.nextInning, Event2: "終了", "RBI": "-", Time: state.currentTime });
+            for (let i = 0; i < state.data.length; i++) {
+                newData.push(state.data[i]);
+            }
+            return {
+                ...state,
+                nextInning: action.nextInning,
+                data: newData
+            };
+        case actionTypes.INNING_SELECT_CHANGE:
+            return {
+                ...state,
+                selectedInning: action.selectedInning
+            };
+        case actionTypes.OMOTE_SELECT_CHANGE:
+            return {
+                ...state,
+                selectedOmote: action.selectedOmote
             };
         default:
             return state;
     }
 };
-
-const reducer = combineReducers({
-    videoChange,
-    resultTableChange,
-    scoreChange,
-});
 
 export default reducer;

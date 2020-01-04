@@ -47,21 +47,41 @@ const tableIcons = {
 function ResultTimeTable() {
 
     const dispatch = useDispatch();
-    let data = useSelector(state => state.resultTableChange.data);
+    let data = useSelector(state => state.data);
     console.log(data);
 
     return (
-        <div>
-            <MaterialTable icons={tableIcons} className="MaterialTable" style={{fontSize: 10}}
+        <div style={{height: "400px", overflow: "scroll"}}>
+            <MaterialTable icons={tableIcons} className="MaterialTable"
                 columns={[
-                    { title: "UserID", field: "UserID"},
-                    { title: "Event1", field: "Event1" },
-                    { title: "Event2", field: "Event2" },
-                    { title: "RBI", field: "RBI", type: "numeric", },
-                    { title: "Time", field: "Time", type: "numeric", },
+                    {
+                        title: "UserID", field: "UserID", cellStyle: {
+                            fontSize: 12,
+                            padding: 0
+                        }},
+                    {
+                        title: "Event1", field: "Event1", cellStyle: {
+                            fontSize: 12,
+                            padding: 0
+                        }},
+                    {
+                        title: "Event2", field: "Event2", cellStyle: {
+                            fontSize: 12,
+                            padding: 0
+                        }},
+                    {
+                        title: "RBI", field: "RBI", cellStyle: {
+                            fontSize: 12,
+                            padding: 0
+                        }},
+                    {
+                        title: "Time", field: "Time", cellStyle: {
+                            fontSize: 12,
+                            padding: 0
+                        }},
                 ]}
                 data={data}
-                title="結果タイムライン"
+                title=""
                 editable={{
                     onRowAdd: newData =>
                         new Promise((resolve, reject) => {
@@ -96,8 +116,24 @@ function ResultTimeTable() {
                 }}
                 onRowClick={(e, row) => { dispatch(resultTimeTableSelect(row))}}
                 options={{
+                    search: false,
+                    headerStyle: {
+                        fontSize: 12,
+                        minWidth: 20,
+                        width: 10,
+                        margin: 0,
+                        padding: 0
+                    },
                     rowStyle: {
-                    }
+                        fontSize: 12,
+                        minWidth: 20,
+                        width: 10,
+                        margin: 0,
+                        padding: 0
+                    },
+                    exportButton: true,
+                    pageSize: 100,
+                    pageSizeOptions: [20, 50, 100, 200, 500, 1000]
                 }}
             />
         </div>
