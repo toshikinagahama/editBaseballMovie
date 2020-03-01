@@ -1,28 +1,28 @@
-import React, { useCallback } from 'react'
-import { useDropzone } from 'react-dropzone'
+import React, { useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
 import './VideoUploadZone.css';
-import { useDispatch, useSelector } from "react-redux";
-import { video_srcChange } from '../actions'
+import { useDispatch, useSelector } from 'react-redux';
+import { video_srcChange } from '../actions';
 
 function VideoUploadZone() {
-    // let player = useSelector(state => state.videoChange.player);
-    const dispatch = useDispatch();
+  // let player = useSelector(state => state.videoChange.player);
+  const dispatch = useDispatch();
 
-    const onDrop = useCallback((acceptedFiles) => {
-        //最初の1ファイルのみ対象。
-        let file = acceptedFiles[0];
-        let url = URL.createObjectURL(file);
-        dispatch(video_srcChange(url));
-    }, [])
-    
-    const { getRootProps, getInputProps } = useDropzone({ onDrop })
+  const onDrop = useCallback(acceptedFiles => {
+    //最初の1ファイルのみ対象。
+    let file = acceptedFiles[0];
+    let url = URL.createObjectURL(file);
+    dispatch(video_srcChange(url));
+  }, []);
 
-    return (
-        <div {...getRootProps()} className="VideoUploadZone" multiple={false}>
-            <input {...getInputProps()} />
-            <p>　　　　　　　　　ファイル選択　　　　　　　　　</p>
-        </div>
-    )
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+  return (
+    <div {...getRootProps()} className="VideoUploadZone" multiple={false}>
+      <input {...getInputProps()} />
+      <p>　　　　　　　　　ファイル選択　　　　　　　　　</p>
+    </div>
+  );
 }
 
 export default VideoUploadZone;

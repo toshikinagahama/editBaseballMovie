@@ -1,29 +1,31 @@
 ※このプロジェクトは[Create React App](https://github.com/facebook/create-react-app)によって作成されました。
 
-※このdocumentは、[Markdown+PlantUML](https://qiita.com/koara-local/items/e7a7a7d68a4f99a91ab1)にて作成しました。
+※この document は、[Markdown+PlantUML](https://qiita.com/koara-local/items/e7a7a7d68a4f99a91ab1)にて作成しました。
+
 # プロジェクトの立ち上げ方法
 
 以下の通りにして環境の構築を行う。
 
-1. node.jsのインストール
+1. node.js のインストール
 
-[Nodejs](https://nodejs.org/ja/)から、推奨版のNode.jsをインストール。
+[Nodejs](https://nodejs.org/ja/)から、推奨版の Node.js をインストール。
 
-2. create-react-appコマンドのインストール
+2. create-react-app コマンドのインストール
 
 ```
 npm install -g create-react-app
 ```
-でcreate-react-appをインストール。
+
+で create-react-app をインストール。
 詳細は、
 
 [Create React App](https://github.com/facebook/create-react-app)
 
-[React初心者が環境構築でつまづかないためのCreate React Appの始め方](https://www.webprofessional.jp/create-react-app/)
+[React 初心者が環境構築でつまづかないための Create React App の始め方](https://www.webprofessional.jp/create-react-app/)
 
 を参照。
 
-3. プロジェクトを作成するフォルダにて、以下のコマンドを実行し、reactのプロジェクトを作成する。
+3. プロジェクトを作成するフォルダにて、以下のコマンドを実行し、react のプロジェクトを作成する。
 
 ```
 create-react-app project名
@@ -33,7 +35,7 @@ create-react-app project名
 cd project名
 ```
 
-4. redux, react-redux,react-bootstrap,bootstrap,electron,electron-packagerのインストール
+4. redux, react-redux,react-bootstrap,bootstrap,electron,electron-packager のインストール
 
 ```
 yarn add redux
@@ -44,14 +46,6 @@ yarn add react-redux
 ```
 
 ```
-yarn add react-bootstrap
-```
-
-```
-yarn add bootstrap
-```
-
-```
 yarn add electron --save-dev
 ```
 
@@ -59,11 +53,11 @@ yarn add electron --save-dev
 yarn add electron-packager --save-dev
 ```
 
-npm installだと、うまく動かないことがあった、、
+npm install だと、うまく動かないことがあった、、
 
 5. 諸設定
 
-package.jsonに以下の項目を追記する。
+package.json に以下の項目を追記する。
 
 ```
   "main": "src/electron-main.js",
@@ -77,14 +71,15 @@ package.jsonに以下の項目を追記する。
 
 参考
 
-[React+Electronアプリを作ってみよう](https://dev.to/origamium/create-reactelectron-application-in-quickly--36nl)
+[React+Electron アプリを作ってみよう](https://dev.to/origamium/create-reactelectron-application-in-quickly--36nl)
 
-[【Electron入門】electron-packagerを使ってアプリを配布](https://shinmedia20.com/electron-pakager-introduction)
+[【Electron 入門】electron-packager を使ってアプリを配布](https://shinmedia20.com/electron-pakager-introduction)
 
-6. electron用のmainの記述。
+6. electron 用の main の記述。
 
-プロジェクトフォルダのsrcフォルダの中にelectron-main.jsを作成する。
-electron-main.jsの中身
+プロジェクトフォルダの src フォルダの中に electron-main.js を作成する。
+electron-main.js の中身
+
 ```
 const electron = require('electron');
 const app = electron.app;
@@ -123,11 +118,11 @@ app.on('activate', function () {
 });
 ```
 
-取り急ぎ動かすだけの最低限の記述。ただ、reactプロジェクトをbuildしないと動かない。（startUrlで読み込んでいるhtmlが、build後のフォルダのため。）
+取り急ぎ動かすだけの最低限の記述。ただ、react プロジェクトを build しないと動かない。（startUrl で読み込んでいる html が、build 後のフォルダのため。）
 
-# プロジェクトのビルド（exe化）方法
+# プロジェクトのビルド（exe 化）方法
 
-1. Reactプロジェクトのビルド方法
+1. React プロジェクトのビルド方法
 
 以下のコマンドを実行。
 
@@ -135,24 +130,28 @@ app.on('activate', function () {
 yarn build
 ```
 
-yarnはフォルダ内のpackage.jsonに記述した、"scripts"のコマンドを読み込む。
+yarn はフォルダ内の package.json に記述した、"scripts"のコマンドを読み込む。
 
-2. electronコマンドでアプリが起動するか確認。
+2. electron コマンドでアプリが起動するか確認。
+
 ```
 yarn electron
 ```
+
 起動すれば成功。
 
-3. electron-packagerの実行でexe化。
+3. electron-packager の実行で exe 化。
+
 ```
 yarn electron-packager
 ```
-でexe化。少し時間がかかります。
 
-electron-packagerのoptionは、ググってください。
+で exe 化。少し時間がかかります。
 
+electron-packager の option は、ググってください。
 
 # シーケンス
+
 ```plantuml
 @startuml
 actor 利用者
@@ -167,10 +166,9 @@ actor データ解析アプリ
 
 ```
 
-
 # 参考資料
 
 [React Bootstrap](https://react-bootstrap.github.io/)
 [React Dropzone](https://react-dropzone.js.org/)
-[Reactドキュメント](https://ja.reactjs.org/docs/hello-world.html)
-[電卓アプリで学ぶReact/Redux入門(実装編)](https://qiita.com/nishina555/items/9ff744a897af8ed1679b)
+[React ドキュメント](https://ja.reactjs.org/docs/hello-world.html)
+[電卓アプリで学ぶ React/Redux 入門(実装編)](https://qiita.com/nishina555/items/9ff744a897af8ed1679b)

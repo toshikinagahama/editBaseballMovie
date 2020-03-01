@@ -1,31 +1,24 @@
 import React from 'react';
 import './App.css';
-import VideoArea from "./VideoArea"
-import InputScoreArea from "./InputScoreArea"
-import VideoUploadZone from "./VideoUploadZone"
-import ResultTab from "./ResultTab"
-import { useSelector } from 'react-redux'
-import { Grid, AppBar, Toolbar, Typography, } from '@material-ui/core';
+import VideoArea from './VideoArea';
+import InputScoreArea from './InputScoreArea';
+import VideoUploadZone from './VideoUploadZone';
+import ResultTab from './ResultTab';
+import { Grid, AppBar, Toolbar, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { keyUp } from '../actions';
 
 function App() {
+  const dispatch = useDispatch();
   let ref1 = React.createRef();
-  React.useEffect(() => {
-
-  });
+  React.useEffect(() => {});
 
   return (
-    <div style={{ padding: 5 }}>
-      <Grid container justify="center" spacing={2}>
+    <div style={{ padding: 0 }}>
+      <Grid container justify="center" spacing={1}>
         <Grid item xs={12}>
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6">
-                動画編集アプリ
-          </Typography>
-              <VideoUploadZone />
-            </Toolbar>
-          </AppBar>
+          <VideoUploadZone />
         </Grid>
         <Grid item xs={8}>
           <Grid container justify="center" ref={ref1}>
