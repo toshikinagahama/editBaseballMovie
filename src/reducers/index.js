@@ -78,7 +78,7 @@ const reducer = (state = initialState, action) => {
         Event1: action.nextInning,
         Event2: '開始',
         RBI: '-',
-        Time: state.currentTime,
+        Time: Math.round(state.player.currentTime),
       });
       for (let i = 0; i < state.data.length; i++) {
         newData.push(state.data[i]);
@@ -94,7 +94,7 @@ const reducer = (state = initialState, action) => {
         Event1: action.nextInning,
         Event2: '終了',
         RBI: '-',
-        Time: state.currentTime,
+        Time: Math.round(state.player.currentTime),
       });
       for (let i = 0; i < state.data.length; i++) {
         newData.push(state.data[i]);
@@ -133,6 +133,7 @@ const reducer = (state = initialState, action) => {
         let val = orderNoList[i];
         if (val <= 9) {
           memberProfile.push({
+            batterNo: action.profiles[val].batterNo,
             name: action.profiles[val].name,
             position: action.profiles[val].position,
           });
@@ -150,13 +151,41 @@ const reducer = (state = initialState, action) => {
         memberProfile: memberProfile,
       };
     case actionTypes.BATTER_CHANGE:
-      console.log(state.currentBatter);
-      console.log(action.currentBatter);
       return {
         ...state,
         currentBatter: action.currentBatter,
       };
-
+    case actionTypes.BATTER_START:
+      console.log();
+      newData.push({
+        UserID: action.currentBatter.name,
+        Event1: 'offence',
+        Event2: '打席開始',
+        RBI: '-',
+        Time: Math.round(state.player.currentTime),
+      });
+      for (let i = 0; i < state.data.length; i++) {
+        newData.push(state.data[i]);
+      }
+      return {
+        ...state,
+        data: newData,
+      };
+    case actionTypes.BATTER_END:
+      newData.push({
+        UserID: action.currentBatter.name,
+        Event1: 'offence',
+        Event2: '打席終了',
+        RBI: '-',
+        Time: Math.round(state.player.currentTime),
+      });
+      for (let i = 0; i < state.data.length; i++) {
+        newData.push(state.data[i]);
+      }
+      return {
+        ...state,
+        data: newData,
+      };
     default:
       return state;
   }

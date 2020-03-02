@@ -78,3 +78,17 @@ export const batterChange = currentBatter => {
     currentBatter,
   };
 };
+
+export const batterStart = currentBatter => {
+  return {
+    type: actionTypes.BATTER_START,
+    currentBatter,
+  };
+};
+
+export const batterEnd = currentBatter => {
+  return {
+    type: actionTypes.BATTER_END,
+    currentBatter,
+  };
+};

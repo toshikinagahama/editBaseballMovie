@@ -14,7 +14,7 @@ function InputBasicInfomation(props) {
   const orderNoList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   let profiles = {};
   orderNoList.forEach(val => {
-    profiles[val] = { name: '', position: '', ref: React.createRef() };
+    profiles[val] = { batterNo: val, name: '', position: '', ref: React.createRef() };
   });
 
   const profileTableKeyDown = (val, e) => {
