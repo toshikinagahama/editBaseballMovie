@@ -5,7 +5,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { Grid } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import Modal from '@material-ui/core/Modal';
+import FormControl from '@material-ui/core/FormControl';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
   scoreInningStart,
   scoreInningEnd,
@@ -27,7 +29,7 @@ function InputScoreArea() {
   return (
     <div style={{ margin: 0 }}>
       <Grid container justify="center">
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <Grid container justify="center">
             <Grid item xs={12} style={{}}>
               <InputLabel id="demo-simple-select-label">イニング</InputLabel>
@@ -71,7 +73,7 @@ function InputScoreArea() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <Grid container justify="center">
             <Grid item xs={12} style={{}}>
               <InputLabel id="demo-simple-select-label">打者 {currentBatter.batterNo}</InputLabel>
@@ -89,24 +91,88 @@ function InputScoreArea() {
                 打者変更
               </Button>
             </Grid>
+            <Grid item xs={12} style={{}}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => dispatch(batterStart(currentBatter))}
+              >
+                打席開始
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => dispatch(batterEnd(currentBatter))}
+              >
+                打席終了
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => dispatch(batterStart(currentBatter))}
-          >
-            打席開始
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => dispatch(batterEnd(currentBatter))}
-          >
-            打席終了
-          </Button>
+        <Grid item xs={6}>
+          <Grid container justify="center">
+            {/* 外野 */}
+            <Grid item xs={3}></Grid>
+            <Grid item xs={2}>
+              <FormControl>
+                <InputLabel htmlFor="grouped-native-select">左</InputLabel>
+
+                <Select defaultValue="" id="grouped-native-select">
+                  <MenuItem value="" disabled>
+                    Placeholder
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={2}>
+              <Button>中</Button>
+            </Grid>
+            <Grid item xs={2}>
+              <Button>右</Button>
+            </Grid>
+            <Grid item xs={3}></Grid>
+            {/* マージン */}
+            <Grid item xs={12}>
+              <div style={{ margin: '1em' }}></div>
+            </Grid>
+            {/* セカンド、ショート */}
+            <Grid item xs={1}></Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Button>遊</Button>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Button>二</Button>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={1}></Grid>
+            {/* サード、ファースト、投手 */}
+            <Grid item xs={1}></Grid>
+            <Grid item xs={2}>
+              <Button>三</Button>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Button>投</Button>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={2}>
+              <Button>一</Button>
+            </Grid>
+            <Grid item xs={1}></Grid>
+            {/* 捕手 */}
+            <Grid item xs={5}></Grid>
+            <Grid item xs={2}>
+              <Button>捕</Button>
+            </Grid>
+            <Grid item xs={5}></Grid>
+          </Grid>
         </Grid>
+        <Grid item xs={3}></Grid>
       </Grid>
     </div>
   );

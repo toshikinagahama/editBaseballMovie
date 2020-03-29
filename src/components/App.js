@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import VideoArea from './VideoArea';
+import CanvasArea from './CanvasArea';
 import InputScoreArea from './InputScoreArea';
 import VideoUploadZone from './VideoUploadZone';
 import ResultTab from './ResultTab';
@@ -24,6 +25,7 @@ function App() {
           <Grid container justify="center" ref={ref1}>
             <Grid item xs={12}>
               <VideoArea />
+              <CanvasArea />
             </Grid>
             <Grid item xs={12}>
               <InputScoreArea />
