@@ -1,6 +1,14 @@
 import * as actionTypes from '../utils/actionTypes';
 import { combineReducers } from 'redux';
 import { act } from 'react-dom/test-utils';
+import runner_1 from "../images/ランナー1塁.png";
+import runner_2 from "../images/ランナー2塁.png";
+import runner_3 from "../images/ランナー3塁.png";
+import runner_12 from "../images/ランナー12塁.png";
+import runner_13 from "../images/ランナー13塁.png";
+import runner_23 from "../images/ランナー23塁.png";
+import runner_123 from "../images/ランナー満塁.png";
+import tanita_vs_enemy from "../images/タニター相手.png"
 
 const initialState = {
   player: {},
@@ -14,9 +22,11 @@ const initialState = {
   memberProfile: [],
   currentTime: 0,
   currentBatter: '',
+  batterScoreResult: '',
   nextInning: 0,
   selectedInning: 1,
   selectedOmote: '表',
+  activeImage: [{ src: runner_123 }, { src: tanita_vs_enemy }],
 };
 
 const reducer = (state = initialState, action) => {
@@ -170,8 +180,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         data: newData,
+        activeImage: [{ src: runner_1 }]
       };
     case actionTypes.BATTER_END:
+      newData.push({
+        UserID: action.currentBatter.name,
+        Event1: 'offence',
+        Event2: state.batterScoreResult,
+        RBI: '-',
+        Time: Math.round(state.player.currentTime),
+      });
       newData.push({
         UserID: action.currentBatter.name,
         Event1: 'offence',
@@ -182,9 +200,16 @@ const reducer = (state = initialState, action) => {
       for (let i = 0; i < state.data.length; i++) {
         newData.push(state.data[i]);
       }
+      state.batterScoreResult = "";
       return {
         ...state,
         data: newData,
+        activeImage: [{ src: runner_12 }]
+      };
+    case actionTypes.BATTER_SCORE_CHANGE:
+      return {
+        ...state,
+        batterScoreResult: action.scoreResult
       };
     default:
       return state;

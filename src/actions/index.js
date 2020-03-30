@@ -92,3 +92,10 @@ export const batterEnd = currentBatter => {
     currentBatter,
   };
 };
+
+export const batterScoreChange = scoreResult => {
+  return {
+    type: actionTypes.BATTER_SCORE_CHANGE,
+    scoreResult,
+  };
+};

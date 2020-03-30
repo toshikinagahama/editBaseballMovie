@@ -18,7 +18,7 @@ function VideoUploadZone() {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps()} className="VideoUploadZone" multiple={false}>
+    <div {...getRootProps()} className="VideoUploadZone" multiple={false} style={{ margin: 0, padding: 0 }}>
       <input {...getInputProps()} />
       <p>　　　　　　　　　ファイル選択　　　　　　　　　</p>
     </div>

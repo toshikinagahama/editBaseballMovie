@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
-import VideoArea from './VideoArea';
-import CanvasArea from './CanvasArea';
+import PreviewArea from './PreviewArea';
 import InputScoreArea from './InputScoreArea';
 import VideoUploadZone from './VideoUploadZone';
 import ResultTab from './ResultTab';
@@ -13,26 +12,25 @@ import { keyUp } from '../actions';
 function App() {
   const dispatch = useDispatch();
   let ref1 = React.createRef();
-  React.useEffect(() => {});
+  React.useEffect(() => { });
 
   return (
-    <div style={{ padding: 0 }}>
-      <Grid container justify="center" spacing={1}>
+    <div>
+      <Grid container justify="center">
         <Grid item xs={12}>
           <VideoUploadZone />
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={6}>
           <Grid container justify="center" ref={ref1}>
             <Grid item xs={12}>
-              <VideoArea />
-              <CanvasArea />
+              <PreviewArea />
             </Grid>
             <Grid item xs={12}>
               <InputScoreArea />
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <Grid container justify="center">
             <Grid item xs={12}>
               <ResultTab />
