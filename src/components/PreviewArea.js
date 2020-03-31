@@ -42,7 +42,6 @@ function PreviewArea() {
 
 
     canvas.onkeydown = e => {
-      console.log(e);
       e.preventDefault();
       let keycode;
       let ctrl;
@@ -82,8 +81,10 @@ function PreviewArea() {
 
         if (keycode == 37) {
           player.currentTime -= 1.0 / 30.0;
+          dispatch(video_currentTimeChange(player.currentTime));
         } else if (keycode == 39) {
           player.currentTime += 1.0 / 30.0;
+          dispatch(video_currentTimeChange(player.currentTime));
         } else if (keycode == 38) {
           player.volume += 0.02;
         } else if (keycode == 40) {
@@ -108,8 +109,10 @@ function PreviewArea() {
       } else {	// 通常のキーダウン時の場合 
         if (keycode == 37) {
           player.currentTime -= 1.0;
+          dispatch(video_currentTimeChange(player.currentTime));
         } else if (keycode == 39) {
           player.currentTime += 1.0;
+          dispatch(video_currentTimeChange(player.currentTime));
         }
       }
 
@@ -146,7 +149,7 @@ function PreviewArea() {
       ref={parentRef}
       style={{ position: 'relative', overflow: 'hidden', height: '100%', width: '100%' }}
     >
-      <video width={'100%'} ref={playerRef} src={src}
+      <video width={'100%'} ref={playerRef} src={src} muted
         style={{ position: 'absolute' }}
       ></video>
       <canvas width={'100%'} ref={canvasRef}
