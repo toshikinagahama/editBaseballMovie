@@ -21,13 +21,13 @@ import {
 
 function InputScoreArea() {
   const dispatch = useDispatch();
-  let selectedOmote = useSelector(state => state.selectedOmote);
-  let selectedInning = useSelector(state => state.selectedInning);
-  let currentBatter = useSelector(state => state.currentBatter);
-  let memberProfile = useSelector(state => state.memberProfile);
+  let selectedOmote = useSelector((state) => state.selectedOmote);
+  let selectedInning = useSelector((state) => state.selectedInning);
+  let currentBatter = useSelector((state) => state.currentBatter);
+  let memberProfile = useSelector((state) => state.memberProfile);
   const [anchorEl1, setAnchorEl1] = React.useState(null);
   const [anchorEl2, setAnchorEl2] = React.useState(null);
-  const [position, setPosition] = React.useState("");
+  const [position, setPosition] = React.useState('');
 
   return (
     <div style={{ margin: 0 }}>
@@ -37,10 +37,10 @@ function InputScoreArea() {
             <Grid item xs={12} style={{}}>
               <InputLabel id="demo-simple-select-label">イニング</InputLabel>
               <Select
-                onChange={e => dispatch(inningSelectChange(e.target.value))}
+                onChange={(e) => dispatch(inningSelectChange(e.target.value))}
                 value={selectedInning}
               >
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(val => {
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((val) => {
                   return <MenuItem value={val}>{val}回</MenuItem>;
                 })}
               </Select>
@@ -48,10 +48,10 @@ function InputScoreArea() {
             <Grid item xs={12} style={{}}>
               <InputLabel id="demo-simple-select-label"></InputLabel>
               <Select
-                onChange={e => dispatch(omoteSelectChange(e.target.value))}
+                onChange={(e) => dispatch(omoteSelectChange(e.target.value))}
                 value={selectedOmote}
               >
-                {['表', '裏'].map(val => {
+                {['表', '裏'].map((val) => {
                   return <MenuItem value={val}>{val}</MenuItem>;
                 })}
               </Select>
@@ -81,12 +81,12 @@ function InputScoreArea() {
             <Grid item xs={12} style={{}}>
               <InputLabel id="demo-simple-select-label">打者 {currentBatter.batterNo}</InputLabel>
               <Select
-                onChange={e => {
+                onChange={(e) => {
                   dispatch(batterChange(e.target.value));
                 }}
                 value={currentBatter.name}
               >
-                {memberProfile.map(val => {
+                {memberProfile.map((val) => {
                   return <MenuItem value={val}>{val.name}</MenuItem>;
                 })}
               </Select>
@@ -120,34 +120,103 @@ function InputScoreArea() {
               anchorEl={anchorEl1}
               keepMounted
               open={Boolean(anchorEl1)}
-              onClose={() => { setAnchorEl1(null) }}
+              onClose={() => {
+                setAnchorEl1(null);
+              }}
             >
-              {["安打", "ゴロ", "フライ", "エラー", "2塁打", "3塁打", "本塁打"].map((val, index) => {
-                return <MenuItem onClick={(e) => { dispatch(batterScoreChange(position + val)); setAnchorEl1(null) }}>{val}</MenuItem>;
-              })}
+              {['安打', 'ゴロ', 'フライ', 'エラー', '2塁打', '3塁打', '本塁打'].map(
+                (val, index) => {
+                  return (
+                    <MenuItem
+                      onClick={(e) => {
+                        dispatch(batterScoreChange(position + val));
+                        setAnchorEl1(null);
+                      }}
+                    >
+                      {val}
+                    </MenuItem>
+                  );
+                }
+              )}
             </Menu>
             <Menu
               id="scoreMenu2"
               anchorEl={anchorEl2}
               keepMounted
               open={Boolean(anchorEl2)}
-              onClose={() => { setAnchorEl2(null) }}
+              onClose={() => {
+                setAnchorEl2(null);
+              }}
             >
-              {["三振", "四球", "安打", "ゴロ", "フライ", "エラー", "2塁打", "3塁打", "本塁打"].map((val, index) => {
-                return <MenuItem onClick={(e) => { dispatch(batterScoreChange(val)); setAnchorEl2(null) }}>{val}</MenuItem>;
+              {[
+                '三振',
+                '四球',
+                '死球',
+                '安打',
+                'ゴロ',
+                'フライ',
+                'エラー',
+                '2塁打',
+                '3塁打',
+                '本塁打',
+              ].map((val, index) => {
+                if (val === '三振' || val === '四球' || val === '死球') {
+                  return (
+                    <MenuItem
+                      onClick={(e) => {
+                        dispatch(batterScoreChange(val));
+                        setAnchorEl2(null);
+                      }}
+                    >
+                      {val}
+                    </MenuItem>
+                  );
+                } else {
+                  return (
+                    <MenuItem
+                      onClick={(e) => {
+                        dispatch(batterScoreChange(position + val));
+                        setAnchorEl2(null);
+                      }}
+                    >
+                      {val}
+                    </MenuItem>
+                  );
+                }
               })}
             </Menu>
 
             {/* 外野 */}
             <Grid item xs={3}></Grid>
             <Grid item xs={2}>
-              <Button onClick={event => { setPosition("左"); setAnchorEl1(event.currentTarget) }}>左</Button>
+              <Button
+                onClick={(event) => {
+                  setPosition('左');
+                  setAnchorEl1(event.currentTarget);
+                }}
+              >
+                左
+              </Button>
             </Grid>
             <Grid item xs={2}>
-              <Button onClick={event => { setPosition("中"); setAnchorEl1(event.currentTarget) }}>中</Button>
+              <Button
+                onClick={(event) => {
+                  setPosition('中');
+                  setAnchorEl1(event.currentTarget);
+                }}
+              >
+                中
+              </Button>
             </Grid>
             <Grid item xs={2}>
-              <Button onClick={event => { setPosition("右"); setAnchorEl1(event.currentTarget) }}>右</Button>
+              <Button
+                onClick={(event) => {
+                  setPosition('右');
+                  setAnchorEl1(event.currentTarget);
+                }}
+              >
+                右
+              </Button>
             </Grid>
             <Grid item xs={3}></Grid>
             {/* マージン */}
@@ -158,32 +227,74 @@ function InputScoreArea() {
             <Grid item xs={1}></Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}>
-              <Button onClick={event => { setPosition("遊"); setAnchorEl1(event.currentTarget) }}>遊</Button>
+              <Button
+                onClick={(event) => {
+                  setPosition('遊');
+                  setAnchorEl1(event.currentTarget);
+                }}
+              >
+                遊
+              </Button>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}>
-              <Button onClick={event => { setPosition("二"); setAnchorEl1(event.currentTarget) }}>二</Button>
+              <Button
+                onClick={(event) => {
+                  setPosition('二');
+                  setAnchorEl1(event.currentTarget);
+                }}
+              >
+                二
+              </Button>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={1}></Grid>
             {/* サード、ファースト、投手 */}
             <Grid item xs={1}></Grid>
             <Grid item xs={2}>
-              <Button onClick={event => { setPosition("三"); setAnchorEl1(event.currentTarget) }}>三</Button>
+              <Button
+                onClick={(event) => {
+                  setPosition('三');
+                  setAnchorEl1(event.currentTarget);
+                }}
+              >
+                三
+              </Button>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}>
-              <Button onClick={event => { setPosition("投"); setAnchorEl2(event.currentTarget) }}>投</Button>
+              <Button
+                onClick={(event) => {
+                  setPosition('投');
+                  setAnchorEl2(event.currentTarget);
+                }}
+              >
+                投
+              </Button>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}>
-              <Button onClick={event => { setPosition("一"); setAnchorEl1(event.currentTarget) }}>一</Button>
+              <Button
+                onClick={(event) => {
+                  setPosition('一');
+                  setAnchorEl1(event.currentTarget);
+                }}
+              >
+                一
+              </Button>
             </Grid>
             <Grid item xs={1}></Grid>
             {/* 捕手 */}
             <Grid item xs={5}></Grid>
             <Grid item xs={2}>
-              <Button onClick={event => { setPosition("捕"); setAnchorEl1(event.currentTarget) }}>捕</Button>
+              <Button
+                onClick={(event) => {
+                  setPosition('捕');
+                  setAnchorEl1(event.currentTarget);
+                }}
+              >
+                捕
+              </Button>
             </Grid>
             <Grid item xs={5}></Grid>
           </Grid>

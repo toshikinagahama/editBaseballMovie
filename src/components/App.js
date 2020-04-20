@@ -12,7 +12,7 @@ import { keyUp } from '../actions';
 function App() {
   const dispatch = useDispatch();
   let ref1 = React.createRef();
-  React.useEffect(() => { });
+  React.useEffect(() => {});
 
   return (
     <div>
@@ -20,7 +20,7 @@ function App() {
         <Grid item xs={12}>
           <VideoUploadZone />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={8}>
           <Grid container justify="center" ref={ref1}>
             <Grid item xs={12}>
               <PreviewArea />
@@ -30,7 +30,7 @@ function App() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <Grid container justify="center">
             <Grid item xs={12}>
               <ResultTab />

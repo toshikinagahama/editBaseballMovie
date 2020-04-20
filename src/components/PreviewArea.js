@@ -1,19 +1,20 @@
 import React from 'react';
 import { video_oprationAction, video_currentTimeChange } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
-import CanvasArea from "./CanvasArea"
-import runner_123 from "../images/ランナー満塁.png";
+import CanvasArea from './CanvasArea';
+import runner_123 from '../images/ランナー満塁.png';
 
 function PreviewArea() {
   const dispatch = useDispatch();
   let playerRef = React.createRef();
   let parentRef = React.createRef();
   let canvasRef = React.createRef();
-  let player = useSelector(state => state.player);
-  let src = useSelector(state => state.src);
+  let player = useSelector((state) => state.player);
+  let src = 'http://localhost:8080/nagahama.mp4';
+  // let src = useSelector((state) => state.src);
   let timer = null;
 
-  let currentTime = useSelector(state => state.currentTime);
+  let currentTime = useSelector((state) => state.currentTime);
   if (currentTime !== null && player !== undefined && player.paused) {
     player.currentTime = currentTime;
   }
@@ -23,9 +24,10 @@ function PreviewArea() {
     let parent = parentRef.current;
     let canvas = canvasRef.current;
 
-    dispatch(video_oprationAction(player));
+    console.log(parent.offsetWidth);
+    dispatch(video_oprationAction(player, parent.offsetWidth));
 
-    player.onloadedmetadata = e => {
+    player.onloadedmetadata = (e) => {
       parent.style.width = parent.offsetWidth + 'px';
       parent.style.height = parent.offsetHeight + 'px';
       player.style.width = parent.offsetWidth + 'px';
@@ -38,45 +40,43 @@ function PreviewArea() {
       canvas.style.width = player.style.width;
       canvas.style.height = player.style.height;
       canvas.focus();
-    }
+    };
 
-
-    canvas.onkeydown = e => {
+    canvas.onkeydown = (e) => {
       e.preventDefault();
       let keycode;
       let ctrl;
       let shift;
 
-      // Mozilla(Firefox, NN) and Opera 
+      // Mozilla(Firefox, NN) and Opera
       if (e != null) {
         keycode = e.which;
         ctrl = typeof e.modifiers == 'undefined' ? e.ctrlKey : e.modifiers & Event.CONTROL_MASK;
         shift = typeof e.modifiers == 'undefined' ? e.shiftKey : e.modifiers & Event.SHIFT_MASK;
-        // イベントの上位伝播を防止 
+        // イベントの上位伝播を防止
         e.preventDefault();
         e.stopPropagation();
-        // Internet Explorer 
+        // Internet Explorer
       } else {
         keycode = e.keyCode;
         ctrl = e.ctrlKey;
         shift = e.shiftKey;
-        // イベントの上位伝播を防止 
+        // イベントの上位伝播を防止
         e.returnValue = false;
         e.cancelBubble = true;
       }
 
-      // キーコードの文字を取得 
+      // キーコードの文字を取得
       let keychar = String.fromCharCode(keycode).toUpperCase();
 
-      // Ctrl同時押しの場合 
+      // Ctrl同時押しの場合
       if (ctrl) {
-
-      } else if (shift) { // Shift同時押しの場合
-        if (keycode == 32) {	//スペースの場合
-          if (!player.paused)
-            player.pause();
-          else
-            player.play();
+      } else if (shift) {
+        // Shift同時押しの場合
+        if (keycode == 32) {
+          //スペースの場合
+          if (!player.paused) player.pause();
+          else player.play();
         }
 
         if (keycode == 37) {
@@ -91,22 +91,21 @@ function PreviewArea() {
           player.volume -= 0.02;
         }
 
-
-
-        if (keychar == "V") {
+        if (keychar == 'V') {
           // writeTime();
-        } else if (keychar == "1") {
+        } else if (keychar == '1') {
           player.playbackRate = 1;
-        } else if (keychar == "2") {
+        } else if (keychar == '2') {
           player.playbackRate = 2;
-        } else if (keychar == "3") {
+        } else if (keychar == '3') {
           player.playbackRate = 4;
-        } else if (keychar == "4") {
+        } else if (keychar == '4') {
           player.playbackRate = 10;
-        } else if (keychar == "5") {
+        } else if (keychar == '5') {
           player.playbackRate = 15;
         }
-      } else {	// 通常のキーダウン時の場合 
+      } else {
+        // 通常のキーダウン時の場合
         if (keycode == 37) {
           player.currentTime -= 1.0;
           dispatch(video_currentTimeChange(player.currentTime));
@@ -115,19 +114,18 @@ function PreviewArea() {
           dispatch(video_currentTimeChange(player.currentTime));
         }
       }
+    };
 
-    }
-
-    canvas.onkeypress = e => {
+    canvas.onkeypress = (e) => {
       e.preventDefault();
-    }
+    };
 
-    canvas.onkeyup = e => {
-      console.log(e);
+    canvas.onkeyup = (e) => {
+      // console.log(e);
       e.preventDefault();
-    }
+    };
 
-    player.onplay = e => {
+    player.onplay = (e) => {
       timer = setInterval(function () {
         if (player.paused) {
           clearInterval(timer);
@@ -136,7 +134,7 @@ function PreviewArea() {
       }, 500);
     };
 
-    player.onpause = e => {
+    player.onpause = (e) => {
       console.log('pause');
       if (timer !== null) {
         clearInterval(timer);
@@ -149,13 +147,14 @@ function PreviewArea() {
       ref={parentRef}
       style={{ position: 'relative', overflow: 'hidden', height: '100%', width: '100%' }}
     >
-      <video width={'100%'} ref={playerRef} src={src} muted
+      <video
+        width={'100%'}
+        ref={playerRef}
+        src={src}
+        muted
         style={{ position: 'absolute' }}
       ></video>
-      <canvas width={'100%'} ref={canvasRef}
-        style={{ position: 'absolute' }}
-        tabindex="1"
-      ></canvas>
+      <canvas width={'100%'} ref={canvasRef} style={{ position: 'absolute' }} tabindex="1"></canvas>
       <CanvasArea />
     </div>
   );
