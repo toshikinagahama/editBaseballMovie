@@ -10,7 +10,7 @@ function PreviewArea() {
   let parentRef = React.createRef();
   let canvasRef = React.createRef();
   let player = useSelector((state) => state.player);
-  let src = 'http://localhost:8080/nagahama.mp4';
+  let src = 'http://localhost:8080/goto.mp4';
   // let src = useSelector((state) => state.src);
   let timer = null;
 

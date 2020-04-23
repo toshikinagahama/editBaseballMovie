@@ -124,7 +124,7 @@ function RunnerInfoArea() {
           let tmpTop = ((mainHeight / 100) * area['inning'].top_per - this.height / 2) * ratioWidth;
           let tmpLeft = ((mainWidth / 100) * area['inning'].left_per - this.width / 2) * ratioWidth;
 
-          let tmpWidth = this.width * ratioWidth;
+          let tmpWidth = (this.width / 1.2) * ratioWidth;
           inningCurrent.style.top = tmpTop + 'px';
           inningCurrent.style.left = tmpLeft + 'px';
           inningCurrent.style.width = tmpWidth + 'px';

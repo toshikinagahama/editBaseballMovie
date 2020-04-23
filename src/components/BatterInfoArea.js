@@ -12,6 +12,7 @@ function BatterInfoArea() {
   let parentRef = React.createRef();
   let mainRef = React.createRef();
   let nameRef = React.createRef();
+  let commentRef = React.createRef();
   let result1Ref = React.createRef();
   let result2Ref = React.createRef();
   let result3Ref = React.createRef();
@@ -38,6 +39,7 @@ function BatterInfoArea() {
       //メイン画像
       let mainCurrent = mainRef.current;
       let nameCurrent = nameRef.current;
+      let commentCurrent = commentRef.current;
       let result1Current = result1Ref.current;
       let result2Current = result2Ref.current;
       let result3Current = result3Ref.current;
@@ -72,6 +74,21 @@ function BatterInfoArea() {
           nameCurrent.src = nameImg.src;
         };
         nameImg.src = area['name'].src;
+        //コメント画像
+        let commentImg = new Image();
+        commentImg.onload = function () {
+          let tmpTop =
+            ((mainHeight / 100) * area['comment'].top_per - this.height / 2) * ratioWidth;
+          let tmpLeft =
+            ((mainWidth / 100) * area['comment'].left_per - this.width / 2) * ratioWidth;
+          let tmpWidth = this.width * ratioWidth;
+          commentCurrent.style.top = tmpTop + 'px';
+          commentCurrent.style.left = tmpLeft + 'px';
+          commentCurrent.style.width = tmpWidth + 'px';
+
+          commentCurrent.src = commentImg.src;
+        };
+        commentImg.src = area['comment'].src;
         //打席結果画像
         let result1Img = new Image();
         result1Img.onload = function () {
@@ -340,6 +357,12 @@ function BatterInfoArea() {
       ></img>
       <img
         ref={nameRef}
+        style={{
+          position: 'absolute',
+        }}
+      ></img>
+      <img
+        ref={commentRef}
         style={{
           position: 'absolute',
         }}

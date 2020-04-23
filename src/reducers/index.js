@@ -315,8 +315,8 @@ let batterInfoArea = {
   }, //相対位置%と相対サイズ%
   comment: {
     src: '',
-    top_per: 50,
-    left_per: 50,
+    top_per: 20,
+    left_per: 42,
   }, //相対位置%と相対サイズ%
   results: [
     {
@@ -447,7 +447,7 @@ const initialState = {
     {
       batterNo: 3,
       name: '永濱',
-      comment: '',
+      comment: '朝遅刻しました！',
       position: '投',
       nameSrc: '',
       commentSrc: '',
@@ -455,7 +455,7 @@ const initialState = {
     {
       batterNo: 4,
       name: '角野',
-      comment: '',
+      comment: 'しっかりと楽しみます！',
       position: '捕',
       nameSrc: '',
       commentSrc: '',
@@ -525,15 +525,28 @@ const reducer = (state = initialState, action) => {
       // console.log(ratio);
       let newMemberProfile = [...state.memberProfile];
       for (let i = 0; i < newMemberProfile.length; i++) {
-        let cnvs = document.createElement('canvas');
-        let ctx = cnvs.getContext('2d');
+        {
+          let cnvs = document.createElement('canvas');
+          let ctx = cnvs.getContext('2d');
 
-        // 変数宣言
-        ctx.font = '48px Source Han Sans';
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText(newMemberProfile[i].name, 10, 100);
-        let tmpURL = cnvs.toDataURL('image/png');
-        newMemberProfile[i].nameSrc = tmpURL;
+          // 変数宣言
+          ctx.font = '48px Source Han Sans';
+          ctx.fillStyle = '#ffffff';
+          ctx.fillText(newMemberProfile[i].name, 10, 100);
+          let tmpURL = cnvs.toDataURL('image/png');
+          newMemberProfile[i].nameSrc = tmpURL;
+        }
+        {
+          let cnvs = document.createElement('canvas');
+          let ctx = cnvs.getContext('2d');
+
+          // 変数宣言
+          ctx.font = '24px Source Han Sans';
+          ctx.fillStyle = '#000000';
+          ctx.fillText(newMemberProfile[i].comment, 10, 100);
+          let tmpURL = cnvs.toDataURL('image/png');
+          newMemberProfile[i].commentSrc = tmpURL;
+        }
       }
       return {
         ...state,
@@ -592,7 +605,8 @@ const reducer = (state = initialState, action) => {
       let runnerSrc;
       let batterName;
       let batterNameSrc;
-      let batterResults;
+      let batterCommentSrc;
+      let attackTop;
       {
         let filteredData = data.filter(function (item, index) {
           if (item.Time <= action.currentTime) {
@@ -606,6 +620,11 @@ const reducer = (state = initialState, action) => {
           if (filteredData[filteredData.length - 1].Event2 === '開始') {
             //直前が開始であれば、そのイニング中である。
             inningSrc = imageResources[filteredData[filteredData.length - 1].Event1];
+            if (filteredData[filteredData.length - 1].Event1.includes('表')) {
+              attackTop = 24;
+            } else {
+              attackTop = 76;
+            }
             console.log(filteredData[filteredData.length - 1].Event1);
           }
         }
@@ -618,6 +637,13 @@ const reducer = (state = initialState, action) => {
               src: inningSrc,
             },
           },
+          scoreInfoArea: {
+            ...newDisplay.scoreInfoArea,
+            attack: {
+              ...newDisplay.scoreInfoArea.attack,
+              top_per: attackTop,
+            },
+          },
         };
       }
       //ランナーの取得
@@ -625,7 +651,6 @@ const reducer = (state = initialState, action) => {
         let filteredData = data.filter(function (item, index) {
           if (item.Time <= action.currentTime) {
             if (item.Event2.includes('runner')) {
-              //回が含まれているもののみ抽出
               return true;
             }
           }
@@ -664,10 +689,11 @@ const reducer = (state = initialState, action) => {
             });
             //エラー処理必要。
             if (member !== undefined) batterNameSrc = member[0].nameSrc;
+            if (member !== undefined) batterCommentSrc = member[0].commentSrc;
           }
         }
-        console.log(filteredData);
-        console.log(batterName);
+        // console.log(filteredData);
+        // console.log(batterName);
         newDisplay = {
           ...newDisplay,
           runnerInfoArea: {
@@ -682,6 +708,10 @@ const reducer = (state = initialState, action) => {
             name: {
               ...newDisplay.batterInfoArea.name,
               src: batterNameSrc,
+            },
+            comment: {
+              ...newDisplay.batterInfoArea.comment,
+              src: batterCommentSrc,
             },
           },
         };
@@ -715,6 +745,10 @@ const reducer = (state = initialState, action) => {
             name: {
               ...newDisplay.batterInfoArea.name,
               src: batterNameSrc,
+            },
+            comment: {
+              ...newDisplay.batterInfoArea.comment,
+              src: batterCommentSrc,
             },
             results: newDisplay.batterInfoArea.results,
           },

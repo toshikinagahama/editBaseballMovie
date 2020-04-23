@@ -20,7 +20,7 @@ function App() {
         <Grid item xs={12}>
           <VideoUploadZone />
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           <Grid container justify="center" ref={ref1}>
             <Grid item xs={12}>
               <PreviewArea />
@@ -30,7 +30,7 @@ function App() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           <Grid container justify="center">
             <Grid item xs={12}>
               <ResultTab />
