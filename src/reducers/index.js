@@ -414,7 +414,10 @@ const initialState = {
   data: [
     { UserID: '-', Event1: 'offence', Event2: 'runner_123', RBI: '-', Time: 5 },
     { UserID: '-', Event1: 'offence', Event2: 'runner_1', RBI: '-', Time: 2 },
-    { UserID: '-', Event1: '1回裏', Event2: '開始', RBI: '-', Time: 1 },
+    { UserID: '-', Event1: '1回裏', Event2: '終了', RBI: '-', Time: 4 },
+    { UserID: '-', Event1: '1回裏', Event2: '開始', RBI: '-', Time: 3 },
+    { UserID: '-', Event1: '1回表', Event2: '終了', RBI: '-', Time: 2 },
+    { UserID: '-', Event1: '1回表', Event2: '開始', RBI: '-', Time: 1 },
     { UserID: '角野', Event1: 'offence', Event2: '打席開始', RBI: 0, Time: 2 },
     { UserID: '角野', Event1: 'offence', Event2: '打席終了', RBI: 0, Time: 2 },
     { UserID: '角野', Event1: '打席結果', Event2: '左本塁打', RBI: 2, Time: 2 },

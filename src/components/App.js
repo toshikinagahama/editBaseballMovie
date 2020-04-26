@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import CommandDownload from './CommandDownload';
 import PreviewArea from './PreviewArea';
 import InputScoreArea from './InputScoreArea';
 import VideoUploadZone from './VideoUploadZone';
@@ -17,8 +18,11 @@ function App() {
   return (
     <div>
       <Grid container justify="center">
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <VideoUploadZone />
+        </Grid>
+        <Grid item xs={6}>
+          <CommandDownload />
         </Grid>
         <Grid item xs={7}>
           <Grid container justify="center" ref={ref1}>
