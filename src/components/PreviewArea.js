@@ -8,7 +8,7 @@ function PreviewArea() {
   const dispatch = useDispatch();
   let playerRef = React.createRef();
   let parentRef = React.createRef();
-  let canvasRef = React.createRef();
+  let canvasRef = React.createRef(); //キャンバスはダミー。
   let player = useSelector((state) => state.player);
   let src = 'http://localhost:8080/goto.mp4';
   // let src = useSelector((state) => state.src);
@@ -154,7 +154,7 @@ function PreviewArea() {
         muted
         style={{ position: 'absolute' }}
       ></video>
-      <canvas width={'100%'} ref={canvasRef} style={{ position: 'absolute' }} tabindex="1"></canvas>
+      <canvas width={'100%'} ref={canvasRef} style={{ position: 'absolute' }} tabIndex="1"></canvas>
       <CanvasArea />
     </div>
   );

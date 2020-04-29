@@ -40,8 +40,12 @@ function InputScoreArea() {
                 onChange={(e) => dispatch(inningSelectChange(e.target.value))}
                 value={selectedInning}
               >
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((val) => {
-                  return <MenuItem value={val}>{val}回</MenuItem>;
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((val, index) => {
+                  return (
+                    <MenuItem value={val} key={index}>
+                      {val}回
+                    </MenuItem>
+                  );
                 })}
               </Select>
             </Grid>
@@ -51,8 +55,12 @@ function InputScoreArea() {
                 onChange={(e) => dispatch(omoteSelectChange(e.target.value))}
                 value={selectedOmote}
               >
-                {['表', '裏'].map((val) => {
-                  return <MenuItem value={val}>{val}</MenuItem>;
+                {['表', '裏'].map((val, index) => {
+                  return (
+                    <MenuItem value={val} key={index}>
+                      {val}
+                    </MenuItem>
+                  );
                 })}
               </Select>
             </Grid>
@@ -86,8 +94,12 @@ function InputScoreArea() {
                 }}
                 value={currentBatter.name}
               >
-                {memberProfile.map((val) => {
-                  return <MenuItem value={val}>{val.name}</MenuItem>;
+                {memberProfile.map((val, index) => {
+                  return (
+                    <MenuItem value={val} key={index}>
+                      {val.name}
+                    </MenuItem>
+                  );
                 })}
               </Select>
               <Button variant="contained" color="primary">
@@ -132,6 +144,7 @@ function InputScoreArea() {
                         dispatch(batterScoreChange(position + val));
                         setAnchorEl1(null);
                       }}
+                      key={index}
                     >
                       {val}
                     </MenuItem>
@@ -167,6 +180,7 @@ function InputScoreArea() {
                         dispatch(batterScoreChange(val));
                         setAnchorEl2(null);
                       }}
+                      key={index}
                     >
                       {val}
                     </MenuItem>
@@ -178,6 +192,7 @@ function InputScoreArea() {
                         dispatch(batterScoreChange(position + val));
                         setAnchorEl2(null);
                       }}
+                      key={index}
                     >
                       {val}
                     </MenuItem>
