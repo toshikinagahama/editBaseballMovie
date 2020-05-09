@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getChildImageInfo } from '../utils/func';
 
 function CountInfoArea() {
   const dispatch = useDispatch();
@@ -31,49 +32,27 @@ function CountInfoArea() {
 
       let mainImg = new Image();
       mainImg.onload = function () {
-        mainWidth = this.width;
-        mainHeight = this.height;
-        let ratioWidth = width / mainWidth;
-        // console.log(ratioWidth);
-        //ストライク画像
-        let strikeImg = new Image();
-        strikeImg.onload = function () {
-          let tmpTop = ((mainHeight / 100) * area['strike'].top_per - this.height / 2) * ratioWidth;
-          let tmpLeft = ((mainWidth / 100) * area['strike'].left_per - this.width / 2) * ratioWidth;
-          let tmpWidth = this.width * ratioWidth;
-          strikeCurrent.style.top = tmpTop + 'px';
-          strikeCurrent.style.left = tmpLeft + 'px';
-          strikeCurrent.style.width = tmpWidth + 'px';
-
-          strikeCurrent.src = strikeImg.src;
-        };
-        strikeImg.src = area['strike'].src;
-        //ボール画像
-        let ballImg = new Image();
-        ballImg.onload = function () {
-          let tmpTop = ((mainHeight / 100) * area['ball'].top_per - this.height / 2) * ratioWidth;
-          let tmpLeft = ((mainWidth / 100) * area['ball'].left_per - this.width / 2) * ratioWidth;
-          let tmpWidth = this.width * ratioWidth;
-          ballCurrent.style.top = tmpTop + 'px';
-          ballCurrent.style.left = tmpLeft + 'px';
-          ballCurrent.style.width = tmpWidth + 'px';
-
-          ballCurrent.src = ballImg.src;
-        };
-        ballImg.src = area['ball'].src;
-        //アウト画像
-        let outImg = new Image();
-        outImg.onload = function () {
-          let tmpTop = ((mainHeight / 100) * area['out'].top_per - this.height / 2) * ratioWidth;
-          let tmpLeft = ((mainWidth / 100) * area['out'].left_per - this.width / 2) * ratioWidth;
-          let tmpWidth = this.width * ratioWidth;
-          outCurrent.style.top = tmpTop + 'px';
-          outCurrent.style.left = tmpLeft + 'px';
-          outCurrent.style.width = tmpWidth + 'px';
-
-          outCurrent.src = outImg.src;
-        };
-        outImg.src = area['out'].src;
+        let src;
+        let top_per;
+        let left_per;
+        let r = width / this.width;
+        let w0 = this.width * r;
+        let h0 = this.height * r;
+        //strike
+        src = area['strike'].src;
+        top_per = area['strike'].top_per;
+        left_per = area['strike'].left_per;
+        getChildImageInfo(w0, h0, r, src, top_per, left_per, strikeCurrent);
+        //ball
+        src = area['ball'].src;
+        top_per = area['ball'].top_per;
+        left_per = area['ball'].left_per;
+        getChildImageInfo(w0, h0, r, src, top_per, left_per, ballCurrent);
+        //out
+        src = area['out'].src;
+        top_per = area['out'].top_per;
+        left_per = area['out'].left_per;
+        getChildImageInfo(w0, h0, r, src, top_per, left_per, outCurrent);
         //メインのトップ、レフトは0,0で固定
         //メインのサイズはこのエリアの要素の幅に合わせる。
         mainCurrent.style.width = width + 'px';

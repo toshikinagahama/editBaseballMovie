@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getChildImageInfo } from '../utils/func';
 
 function ScoreInfoArea() {
   const dispatch = useDispatch();
@@ -41,72 +42,38 @@ function ScoreInfoArea() {
 
       let mainImg = new Image();
       mainImg.onload = function () {
-        mainWidth = this.width;
-        mainHeight = this.height;
-        let ratioWidth = width / mainWidth;
-        //攻撃がどちらかを示す印画像
-        let attackImg = new Image();
-        attackImg.onload = function () {
-          let tmpTop = ((mainHeight / 100) * area['attack'].top_per - this.height / 2) * ratioWidth;
-          let tmpLeft = ((mainWidth / 100) * area['attack'].left_per - this.width / 2) * ratioWidth;
-          let tmpWidth = this.width * ratioWidth;
-          attackCurrent.style.top = tmpTop + 'px';
-          attackCurrent.style.left = tmpLeft + 'px';
-          attackCurrent.style.width = tmpWidth + 'px';
+        let src;
+        let top_per;
+        let left_per;
+        let r = width / this.width;
+        let w0 = this.width * r;
+        let h0 = this.height * r;
+        //攻撃側印
+        src = area['attack'].src;
+        top_per = area['attack'].top_per;
+        left_per = area['attack'].left_per;
+        getChildImageInfo(w0, h0, r, src, top_per, left_per, attackCurrent);
+        //チーム1名
+        src = area['name1'].src;
+        top_per = area['name1'].top_per;
+        left_per = area['name1'].left_per;
+        getChildImageInfo(w0, h0, r, src, top_per, left_per, name1Current);
+        //チーム2名
+        src = area['name2'].src;
+        top_per = area['name2'].top_per;
+        left_per = area['name2'].left_per;
+        getChildImageInfo(w0, h0, r, src, top_per, left_per, name2Current);
+        //チーム1スコア
+        src = area['score1'].src;
+        top_per = area['score1'].top_per;
+        left_per = area['score1'].left_per;
+        getChildImageInfo(w0, h0, r, src, top_per, left_per, score1Current);
+        //チーム2スコア
+        src = area['score2'].src;
+        top_per = area['score2'].top_per;
+        left_per = area['score2'].left_per;
+        getChildImageInfo(w0, h0, r, src, top_per, left_per, score2Current);
 
-          attackCurrent.src = attackImg.src;
-        };
-        attackImg.src = area['attack'].src;
-        //チーム名画像
-        let name1Img = new Image();
-        name1Img.onload = function () {
-          let tmpTop = ((mainHeight / 100) * area['name1'].top_per - this.height / 2) * ratioWidth;
-          let tmpLeft = ((mainWidth / 100) * area['name1'].left_per - this.width / 2) * ratioWidth;
-          let tmpWidth = this.width * ratioWidth;
-          name1Current.style.top = tmpTop + 'px';
-          name1Current.style.left = tmpLeft + 'px';
-          name1Current.style.width = tmpWidth + 'px';
-
-          name1Current.src = name1Img.src;
-        };
-        name1Img.src = area['name1'].src;
-        let name2Img = new Image();
-        name2Img.onload = function () {
-          let tmpTop = ((mainHeight / 100) * area['name2'].top_per - this.height / 2) * ratioWidth;
-          let tmpLeft = ((mainWidth / 100) * area['name2'].left_per - this.width / 2) * ratioWidth;
-          let tmpWidth = this.width * ratioWidth;
-          name2Current.style.top = tmpTop + 'px';
-          name2Current.style.left = tmpLeft + 'px';
-          name2Current.style.width = tmpWidth + 'px';
-
-          name2Current.src = name2Img.src;
-        };
-        name2Img.src = area['name2'].src;
-        //チーム名画像
-        let score1Img = new Image();
-        score1Img.onload = function () {
-          let tmpTop = ((mainHeight / 100) * area['score1'].top_per - this.height / 2) * ratioWidth;
-          let tmpLeft = ((mainWidth / 100) * area['score1'].left_per - this.width / 2) * ratioWidth;
-          let tmpWidth = this.width * ratioWidth;
-          score1Current.style.top = tmpTop + 'px';
-          score1Current.style.left = tmpLeft + 'px';
-          score1Current.style.width = tmpWidth + 'px';
-
-          score1Current.src = score1Img.src;
-        };
-        score1Img.src = area['score1'].src;
-        let score2Img = new Image();
-        score2Img.onload = function () {
-          let tmpTop = ((mainHeight / 100) * area['score2'].top_per - this.height / 2) * ratioWidth;
-          let tmpLeft = ((mainWidth / 100) * area['score2'].left_per - this.width / 2) * ratioWidth;
-          let tmpWidth = this.width * ratioWidth;
-          score2Current.style.top = tmpTop + 'px';
-          score2Current.style.left = tmpLeft + 'px';
-          score2Current.style.width = tmpWidth + 'px';
-
-          score2Current.src = score2Img.src;
-        };
-        score2Img.src = area['score2'].src;
         //メインのトップ、レフトは0,0で固定
         //メインのサイズはこのエリアの要素の幅に合わせる。
         mainCurrent.style.width = width + 'px';

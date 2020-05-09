@@ -2,7 +2,7 @@ import * as actionTypes from '../utils/actionTypes';
 import { combineReducers } from 'redux';
 import { act } from 'react-dom/test-utils';
 //ランナー
-import runner_main from '../resources/runner/main.png';
+import runner_main from '../resources/runner/runner_main.png';
 import runner_0 from '../resources/runner/runner_0.png';
 import runner_1 from '../resources/runner/runner_1.png';
 import runner_2 from '../resources/runner/runner_2.png';
@@ -31,12 +31,12 @@ import ura_8 from '../images/8ウラ.png';
 import omote_9 from '../images/9表.png';
 import ura_9 from '../images/9ウラ.png';
 //スコア
-import score_main from '../resources/score/main.png';
+import score_main from '../resources/score/score_main.png';
 import attack from '../resources/score/attack.png';
 import tanita_name from '../resources/score/tanita_name.png';
 import enermy_name from '../resources/score/enermy_name.png';
 //カウント
-import count_main from '../resources/count/main.png';
+import count_main from '../resources/count/count_main.png';
 import strike_0 from '../resources/count/strike_0.png';
 import strike_1 from '../resources/count/strike_1.png';
 import strike_2 from '../resources/count/strike_2.png';
@@ -48,7 +48,7 @@ import ball_1 from '../resources/count/ball_1.png';
 import ball_2 from '../resources/count/ball_2.png';
 import ball_3 from '../resources/count/ball_3.png';
 //バッター
-import batter_main from '../resources/batter/main.png';
+import batter_main from '../resources/batter/batter_main.png';
 import rbi1 from '../resources/batter/rbi1.png';
 import rbi2 from '../resources/batter/rbi2.png';
 import rbi3 from '../resources/batter/rbi3.png';
@@ -121,7 +121,10 @@ import hit4_7 from '../resources/batter/hit4_7.png';
 import hit4_8 from '../resources/batter/hit4_8.png';
 import hit4_9 from '../resources/batter/hit4_9.png';
 
-let imageResources = {
+export let imageResources = {
+  score_main: score_main,
+  相手: enermy_name,
+  タニタ: tanita_name,
   '1回表': omote_1,
   '1回裏': ura_1,
   '2回表': omote_2,
@@ -140,6 +143,7 @@ let imageResources = {
   '8回裏': ura_8,
   '9回表': omote_9,
   '9回裏': ura_9,
+  runner_main: runner_main,
   runner_0: runner_0,
   runner_1: runner_1,
   runner_2: runner_2,
@@ -148,6 +152,7 @@ let imageResources = {
   runner_13: runner_13,
   runner_23: runner_23,
   runner_123: runner_123,
+  batter_main: batter_main,
   三振: strikeout,
   四球: fourballs,
   死球: deadball,
@@ -288,10 +293,10 @@ let runnerInfoArea = {
   top_abs: 10,
   left_abs: 295 / 4 + 16 + 146 / 4,
   width_abs: 210 / 4,
-  height_abs: 92 / 4,
+  height_abs: 146 / 4,
   main: { src: runner_main }, //絶対位置と絶対サイズ
   runner: {
-    src: runner_12,
+    src: '',
     top_per: 50,
     left_per: 50,
   }, //相対位置%と相対サイズ%
@@ -412,12 +417,16 @@ const initialState = {
   isPlaying: false,
   src: '',
   data: [
-    { UserID: '-', Event1: 'offence', Event2: 'runner_123', RBI: '-', Time: 5 },
-    { UserID: '-', Event1: 'offence', Event2: 'runner_1', RBI: '-', Time: 2 },
-    { UserID: '-', Event1: '1回裏', Event2: '終了', RBI: '-', Time: 4 },
-    { UserID: '-', Event1: '1回裏', Event2: '開始', RBI: '-', Time: 3 },
-    { UserID: '-', Event1: '1回表', Event2: '終了', RBI: '-', Time: 2 },
     { UserID: '-', Event1: '1回表', Event2: '開始', RBI: '-', Time: 1 },
+    { UserID: '-', Event1: 'offence', Event2: 'runner_1', RBI: '-', Time: 2 },
+    { UserID: '-', Event1: 'offence', Event2: 'runner_12', RBI: '-', Time: 3 },
+    { UserID: '-', Event1: 'offence', Event2: 'runner_123', RBI: '-', Time: 4 },
+    { UserID: '-', Event1: '1回表', Event2: '終了', RBI: '-', Time: 5 },
+    { UserID: '-', Event1: '1回裏', Event2: '開始', RBI: '-', Time: 6 },
+    { UserID: '-', Event1: 'offence', Event2: 'runner_1', RBI: '-', Time: 7 },
+    { UserID: '-', Event1: '1回裏', Event2: '終了', RBI: '-', Time: 8 },
+    { UserID: '-', Event1: '2回表', Event2: '開始', RBI: '-', Time: 9 },
+    { UserID: '-', Event1: '2回表', Event2: '終了', RBI: '-', Time: 10 },
     { UserID: '角野', Event1: 'offence', Event2: '打席開始', RBI: 0, Time: 2 },
     { UserID: '角野', Event1: 'offence', Event2: '打席終了', RBI: 0, Time: 2 },
     { UserID: '角野', Event1: '打席結果', Event2: '左本塁打', RBI: 2, Time: 2 },
@@ -522,6 +531,9 @@ const reducer = (state = initialState, action) => {
   let newData = [];
   let data;
   let newActiveImage = [];
+  let newDisplay = {
+    ...state.display,
+  };
   switch (action.type) {
     case actionTypes.VIDEO_OPERATION:
       let ratio = action.previewAreaWidth / 1920; //ビデオのサイズに合わせる
@@ -577,7 +589,7 @@ const reducer = (state = initialState, action) => {
             top_abs: 10 * ratio,
             left_abs: 295 * ratio + 16 * ratio + 146 * ratio,
             width_abs: 210 * ratio,
-            height_abs: 92 * ratio,
+            height_abs: 146 * ratio,
           },
           batterInfoArea: {
             ...state.display.batterInfoArea,
@@ -601,9 +613,7 @@ const reducer = (state = initialState, action) => {
         //ソート後の処理
         data = new_data;
       });
-      let newDisplay = {
-        ...state.display,
-      };
+
       let inningSrc;
       let runnerSrc;
       let batterName;
@@ -659,7 +669,6 @@ const reducer = (state = initialState, action) => {
           }
         });
         if (filteredData.length > 0) {
-          //直前が開始であれば、そのイニング中である。
           runnerSrc = imageResources[filteredData[filteredData.length - 1].Event2];
         }
         newDisplay = {
@@ -869,11 +878,24 @@ const reducer = (state = initialState, action) => {
           }
         }
       }
-
+      let newScoreInfoArea = { ...state.display.scoreInfoArea };
+      if (action.isSenkou) {
+        newScoreInfoArea.name1 = { name: 'タニタ', src: tanita_name, top_per: 24, left_per: 38 };
+        newScoreInfoArea.name2 = { name: '相手', src: enermy_name, top_per: 77, left_per: 38 };
+      } else {
+        newScoreInfoArea.name1 = { name: '相手', src: enermy_name, top_per: 24, left_per: 38 };
+        newScoreInfoArea.name2 = { name: 'タニタ', src: tanita_name, top_per: 77, left_per: 38 };
+      }
+      newDisplay = { ...state.display };
+      newDisplay = {
+        ...newDisplay,
+        scoreInfoArea: newScoreInfoArea,
+      };
       return {
         ...state,
         isSenkou: action.isSenkou,
         memberProfile: memberProfile,
+        display: newDisplay,
       };
     case actionTypes.BATTER_CHANGE:
       return {
@@ -895,7 +917,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         data: newData,
-        activeImage: [{ src: runner_1 }],
       };
     case actionTypes.BATTER_END:
       newData.push({

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { runnerInfoAreaChange } from '../actions';
+import { getChildImageInfo } from '../utils/func';
 
 function RunnerInfoArea() {
   const dispatch = useDispatch();
@@ -18,8 +19,8 @@ function RunnerInfoArea() {
   let mouseTarget;
   let buttonCode = -1;
   //画像のサイズ
-  let mainWidth;
-  let mainHeight;
+  let w0;
+  let h0;
 
   let mousemove = function (event) {
     // console.log(mouseTarget);
@@ -101,40 +102,26 @@ function RunnerInfoArea() {
 
       let mainImg = new Image();
       mainImg.onload = function () {
-        mainWidth = this.width;
-        mainHeight = this.height;
-        let ratioWidth = width / mainWidth;
+        let src;
+        let top_per;
+        let left_per;
+        let r = width / this.width;
+        let w0 = this.width * r;
+        let h0 = this.height * r;
         //ランナー画像
-        let runnerImg = new Image();
-        runnerImg.onload = function () {
-          let tmpTop = ((mainHeight / 100) * area['runner'].top_per - this.height / 2) * ratioWidth;
-          let tmpLeft = ((mainWidth / 100) * area['runner'].left_per - this.width / 2) * ratioWidth;
-          let tmpWidth = this.width * ratioWidth;
-          runnerCurrent.style.top = tmpTop + 'px';
-          runnerCurrent.style.left = tmpLeft + 'px';
-          runnerCurrent.style.width = tmpWidth + 'px';
-
-          runnerCurrent.src = runnerImg.src;
-        };
-        runnerImg.src = area['runner'].src;
+        src = area['runner'].src;
+        top_per = area['runner'].top_per;
+        left_per = area['runner'].left_per;
+        getChildImageInfo(w0, h0, r, src, top_per, left_per, runnerCurrent);
         //イニング画像
+        src = area['inning'].src;
+        top_per = area['inning'].top_per;
+        left_per = area['inning'].left_per;
+        getChildImageInfo(w0, h0, r, src, top_per, left_per, inningCurrent);
 
-        let inningImg = new Image();
-        inningImg.onload = function () {
-          let tmpTop = ((mainHeight / 100) * area['inning'].top_per - this.height / 2) * ratioWidth;
-          let tmpLeft = ((mainWidth / 100) * area['inning'].left_per - this.width / 2) * ratioWidth;
-
-          let tmpWidth = (this.width / 1.2) * ratioWidth;
-          inningCurrent.style.top = tmpTop + 'px';
-          inningCurrent.style.left = tmpLeft + 'px';
-          inningCurrent.style.width = tmpWidth + 'px';
-
-          inningCurrent.src = inningImg.src;
-        };
-        inningImg.src = area['inning'].src;
         //メインのトップ、レフトは0,0で固定
         //メインのサイズはこのエリアの要素の幅に合わせる。
-        mainCurrent.style.width = width + 'px';
+        mainCurrent.style.width = w0 + 'px';
         //高さは自動にする。
         // mainCurrent.style.height = height + 'px';
         mainCurrent.src = mainImg.src;
