@@ -157,14 +157,14 @@ function CommandDownload() {
       <Button variant="contained" color="primary" onClick={buttonClick}>
         動画編集コマンドダウンロード
       </Button>
-      <p>
-        <a href="#" id="downloadlink">
-          ダウンロード
-        </a>
+      <a href="#" id="downloadlink">
+        ダウンロード
+      </a>
+      {/* <p>
       </p>
       <p>
         <canvas id="preview"></canvas>
-      </p>
+      </p> */}
     </div>
   );
 }

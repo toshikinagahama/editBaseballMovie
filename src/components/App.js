@@ -18,10 +18,10 @@ function App() {
   return (
     <div>
       <Grid container justify="center">
-        <Grid item xs={6}>
+        <Grid item xs={3}>
           <VideoUploadZone />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={9}>
           <CommandDownload />
         </Grid>
         <Grid item xs={7}>

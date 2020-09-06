@@ -3,12 +3,13 @@ import { useDropzone } from 'react-dropzone';
 import './VideoUploadZone.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { video_srcChange } from '../actions';
+import { Button } from '@material-ui/core';
 
 function VideoUploadZone() {
   // let player = useSelector(state => state.videoChange.player);
   const dispatch = useDispatch();
 
-  const onDrop = useCallback(acceptedFiles => {
+  const onDrop = useCallback((acceptedFiles) => {
     //最初の1ファイルのみ対象。
     let file = acceptedFiles[0];
     let url = URL.createObjectURL(file);
@@ -18,10 +19,16 @@ function VideoUploadZone() {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps()} className="VideoUploadZone" multiple={false} style={{ margin: 0, padding: 0 }}>
+    <Button
+      variant="contained"
+      color="secondary"
+      {...getRootProps()}
+      className="VideoUploadZone"
+      multiple={false}
+    >
       <input {...getInputProps()} />
-      <p>　　　　　　　　　ファイル選択　　　　　　　　　</p>
-    </div>
+      <p>ファイル選択</p>
+    </Button>
   );
 }
 
