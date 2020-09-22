@@ -10,8 +10,8 @@ function PreviewArea() {
   let parentRef = React.createRef();
   let canvasRef = React.createRef(); //キャンバスはダミー。
   let player = useSelector((state) => state.player);
-  let src = 'http://localhost:8080/goto.mp4';
-  // let src = useSelector((state) => state.src);
+  // let src = 'http://localhost:8080/goto.mp4';
+  let src = useSelector((state) => state.src);
   let timer = null;
 
   let currentTime = useSelector((state) => state.currentTime);
